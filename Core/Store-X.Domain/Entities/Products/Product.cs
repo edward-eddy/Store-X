@@ -17,6 +17,6 @@ namespace Store_X.Domain.Entities.Products
         public ProductBrand Brand { get; set; }
 
         public int TypeId { get; set; }
-        public ProductType Type { get; set; }
+        public Product Type { get; set; }
     }
 }

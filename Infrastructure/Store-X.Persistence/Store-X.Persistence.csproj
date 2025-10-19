@@ -11,4 +11,12 @@
     <ProjectReference Include="..\..\Core\Store-X.Services\Store-X.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.20" />
+  </ItemGroup>
+
 </Project>
