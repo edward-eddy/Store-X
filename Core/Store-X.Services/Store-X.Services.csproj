@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>Store_X.Services</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Store-X.Domain\Store-X.Domain.csproj" />
+    <ProjectReference Include="..\Store-X.Services-Abstractions\Store-X.Services-Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>
