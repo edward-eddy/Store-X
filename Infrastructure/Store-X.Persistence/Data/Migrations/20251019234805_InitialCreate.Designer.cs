@@ -11,7 +11,7 @@ using Store_X.Persistence.Data.Contexts;
 namespace Store_X.Persistence.Data.Migrations
 {
     [DbContext(typeof(StoreDbContext))]
-    [Migration("20251019165526_InitialCreate")]
+    [Migration("20251019234805_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -62,7 +62,7 @@ namespace Store_X.Persistence.Data.Migrations
 
                     b.HasIndex("TypeId");
 
-                    b.ToTable("Product");
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Store_X.Domain.Entities.Products.ProductBrand", b =>
@@ -98,7 +98,7 @@ namespace Store_X.Persistence.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductType");
+                    b.ToTable("ProductTypes");
                 });
 
             modelBuilder.Entity("Store_X.Domain.Entities.Products.Product", b =>

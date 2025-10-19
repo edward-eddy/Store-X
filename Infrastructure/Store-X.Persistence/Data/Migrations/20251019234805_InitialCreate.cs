@@ -24,7 +24,7 @@ namespace Store_X.Persistence.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductType",
+                name: "ProductTypes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -33,11 +33,11 @@ namespace Store_X.Persistence.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductType", x => x.Id);
+                    table.PrimaryKey("PK_ProductTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Product",
+                name: "Products",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -51,27 +51,27 @@ namespace Store_X.Persistence.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Product", x => x.Id);
+                    table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Product_ProductBrands_BrandId",
+                        name: "FK_Products_ProductBrands_BrandId",
                         column: x => x.BrandId,
                         principalTable: "ProductBrands",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Product_Product_TypeId",
+                        name: "FK_Products_Products_TypeId",
                         column: x => x.TypeId,
-                        principalTable: "Product",
+                        principalTable: "Products",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_BrandId",
-                table: "Product",
+                name: "IX_Products_BrandId",
+                table: "Products",
                 column: "BrandId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_TypeId",
-                table: "Product",
+                name: "IX_Products_TypeId",
+                table: "Products",
                 column: "TypeId");
         }
 
@@ -79,10 +79,10 @@ namespace Store_X.Persistence.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Product");
+                name: "Products");
 
             migrationBuilder.DropTable(
-                name: "ProductType");
+                name: "ProductTypes");
 
             migrationBuilder.DropTable(
                 name: "ProductBrands");

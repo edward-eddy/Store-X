@@ -1,12 +1,15 @@
 
 using Microsoft.EntityFrameworkCore;
+using Store_X.Domain.Contracts;
+using Store_X.Persistence;
 using Store_X.Persistence.Data.Contexts;
+using System.Threading.Tasks;
 
 namespace Store_X.Web
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +25,15 @@ namespace Store_X.Web
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+
+
             var app = builder.Build();
+
+            using var scope = app.Services.CreateScope();
+            var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>(); // Ask CLR To Create Object From IDbInitializer
+            await dbInitializer.InitializeAsync();
+
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

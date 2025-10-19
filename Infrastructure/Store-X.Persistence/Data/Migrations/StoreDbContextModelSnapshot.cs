@@ -59,7 +59,7 @@ namespace Store_X.Persistence.Data.Migrations
 
                     b.HasIndex("TypeId");
 
-                    b.ToTable("Product");
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Store_X.Domain.Entities.Products.ProductBrand", b =>
@@ -95,7 +95,7 @@ namespace Store_X.Persistence.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductType");
+                    b.ToTable("ProductTypes");
                 });
 
             modelBuilder.Entity("Store_X.Domain.Entities.Products.Product", b =>
