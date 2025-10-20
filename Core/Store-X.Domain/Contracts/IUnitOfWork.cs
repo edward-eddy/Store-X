@@ -1,0 +1,18 @@
+﻿using Store_X.Domain.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Store_X.Domain.Contracts
+{
+    public interface IUnitOfWork
+    {
+        // Generate Repository
+        IGenericRepository<TKey, TEntity> GetRepository<TKey, TEntity>() where TEntity : BaseEntity<TKey>;
+
+        // Save Changes
+        Task<int> SaveChangesAsync();
+    }
+}
