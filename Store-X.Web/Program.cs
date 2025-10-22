@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Store_X.Domain.Contracts;
 using Store_X.Persistence;
 using Store_X.Persistence.Data.Contexts;
+using Store_X.Services.Mapping.Products;
 using System.Threading.Tasks;
 
 namespace Store_X.Web
@@ -26,6 +27,8 @@ namespace Store_X.Web
             });
 
             builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddAutoMapper(M => M.AddProfile(new ProductProfile()));
 
 
             var app = builder.Build();
