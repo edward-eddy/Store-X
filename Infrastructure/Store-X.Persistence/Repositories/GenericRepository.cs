@@ -44,5 +44,20 @@ namespace Store_X.Persistence.Repositories
         {
             _context.Set<TEntity>().Remove(entity);
         }
+
+        public async Task<IEnumerable<TEntity>> GetAllAsync(ISpecifications<TKey, TEntity> spec, bool removeTracker = false)
+        {
+            return await ApplySpecification(spec).ToListAsync();
+        }
+
+        public async Task<TEntity> GetAsync(ISpecifications<TKey, TEntity> spec)
+        {
+            return await ApplySpecification(spec).FirstOrDefaultAsync();
+        }
+
+        private IQueryable<TEntity> ApplySpecification(ISpecifications<TKey, TEntity> spec)
+        {
+            return SpecificationsEvaluator.GetQuery(_context.Set<TEntity>(), spec);
+        }
     }
 }
