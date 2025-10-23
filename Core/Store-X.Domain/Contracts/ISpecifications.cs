@@ -1,11 +1,5 @@
 ﻿using Store_X.Domain.Entities;
-using Store_X.Domain.Entities.Products;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Store_X.Domain.Contracts
 {
