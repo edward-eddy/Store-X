@@ -30,7 +30,7 @@ namespace Store_X.Web
 
             builder.Services.AddScoped<IDbInitializer, DbInitializer>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-            builder.Services.AddAutoMapper(M => M.AddProfile(new ProductProfile()));
+            builder.Services.AddAutoMapper(M => M.AddProfile(new ProductProfile(builder.Configuration)));
 
             builder.Services.AddScoped<IServiceManager, ServiceManager>();
 
@@ -40,6 +40,7 @@ namespace Store_X.Web
             var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>(); // Ask CLR To Create Object From IDbInitializer
             await dbInitializer.InitializeAsync();
 
+            app.UseStaticFiles();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
