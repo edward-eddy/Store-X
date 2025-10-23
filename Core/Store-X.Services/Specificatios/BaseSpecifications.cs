@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Store_X.Services.Specificatios
 {
-    internal class BaseSpecifications<Tkey, TEntity> : ISpecifications<Tkey, TEntity> where TEntity : BaseEntity<Tkey>
+    public class BaseSpecifications<Tkey, TEntity> : ISpecifications<Tkey, TEntity> where TEntity : BaseEntity<Tkey>
     {
         public List<Expression<Func<TEntity, object>>> Includes { get; set; } = new List<Expression<Func<TEntity, object>>>();
         public Expression<Func<TEntity, bool>>? Criteria { get; set; }
