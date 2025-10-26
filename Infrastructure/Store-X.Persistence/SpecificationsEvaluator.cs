@@ -23,14 +23,6 @@ namespace Store_X.Persistence
                 query = query.Where(spec.Criteria); // _context.Products.Where(P => P.Id == key as int?)
             }
 
-            //if (spec.Includes.Count > 0)
-            //{
-            //    foreach (var item in spec.Includes)
-            //    {
-            //        query = query.Include(item);
-            //    }
-            //}
-
 
             // _context.Products.Where(P => P.Id == key as int?).Include(P => P.Brand)
             // _context.Products.Where(P => P.Id == key as int?).Include(P => P.Brand).Include(P => P.Type)
