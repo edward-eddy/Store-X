@@ -14,7 +14,13 @@ namespace Store_X.Services.Specificatios.Products
         {
             ApplyIncludes();
         }
-        public ProductsWithBrandAndTypeSpecifications() : base(null)
+        public ProductsWithBrandAndTypeSpecifications(int? brandId, int? typeId) : base
+            (
+                P =>
+                (brandId == null || P.BrandId == brandId)
+                &&
+                (typeId == null || P.TypeId == typeId)
+            )
         {
             ApplyIncludes();
         }
