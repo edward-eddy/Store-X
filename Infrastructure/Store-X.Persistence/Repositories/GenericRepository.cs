@@ -13,7 +13,7 @@ namespace Store_X.Persistence.Repositories
             if (typeof(TEntity) == typeof(Product))
             {
                 return removeTracker
-                ? await _context.Products.Include(P => P.Brand).Include(P => P.Type).ToListAsync() as IEnumerable<TEntity>
+                ? await _context.Products.Include(P => P.Brand).Include(P => P.Type).OrderBy(P => P.Price).ToListAsync() as IEnumerable<TEntity>
                 : await _context.Products.Include(P => P.Brand).Include(P => P.Type).AsNoTracking().ToListAsync() as IEnumerable<TEntity>;
             }
             return removeTracker
@@ -58,6 +58,11 @@ namespace Store_X.Persistence.Repositories
         private IQueryable<TEntity> ApplySpecification(ISpecifications<TKey, TEntity> spec)
         {
             return SpecificationsEvaluator.GetQuery(_context.Set<TEntity>(), spec);
+        }
+
+        public async Task<int> GetCountAsync(ISpecifications<TKey, TEntity> spec)
+        {
+            return await ApplySpecification(spec).CountAsync();
         }
     }
 }

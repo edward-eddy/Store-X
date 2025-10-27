@@ -1,10 +1,5 @@
 ﻿using Store_X.Domain.Entities.Products;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+using Store_X.Shared.Dtos.Products;
 
 namespace Store_X.Services.Specificatios.Products
 {
@@ -14,15 +9,52 @@ namespace Store_X.Services.Specificatios.Products
         {
             ApplyIncludes();
         }
-        public ProductsWithBrandAndTypeSpecifications(int? brandId, int? typeId) : base
+        public ProductsWithBrandAndTypeSpecifications(ProductQueryParameters parameters) : base
             (
                 P =>
-                (brandId == null || P.BrandId == brandId)
+                (parameters.BrandId == null || P.BrandId == parameters.BrandId)
                 &&
-                (typeId == null || P.TypeId == typeId)
+                (parameters.TypeId == null || P.TypeId == parameters.TypeId)
+                &&
+                (string.IsNullOrEmpty(parameters.Search) || P.Name.ToLower().Contains(parameters.Search.ToLower()))
             )
         {
+
+
+            ApplyPagination(parameters.PageSize, parameters.PageIndex);
+            ApplySorting(parameters.Sorting);
             ApplyIncludes();
+        }
+
+        private void ApplySorting(string? sort)
+        {
+            // priceasc
+            // pricedesc
+            // nameasc
+            if (!string.IsNullOrEmpty(sort))
+            {
+                // Check Value
+                switch (sort.ToLower())
+                {
+                    case "priceasc":
+                        //OrderBy = P => P.Price;
+                        AddOrderBy(P => P.Price);
+                        break;
+                    case "pricedesc":
+                        //OrderByDescending = P =>P.Price;
+                        AddOrderByDescending(P => P.Price);
+                        break;
+                    default:
+                        //OrderBy = P => P.Name;
+                        AddOrderBy(P => P.Name);
+                        break;
+                }
+            }
+            else
+            {
+                //OrderBy = P => P.Name;
+                AddOrderBy(P => P.Name);
+            }
         }
 
         private void ApplyIncludes()

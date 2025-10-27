@@ -9,7 +9,7 @@ namespace Store_X.Services.Mapping.Products
     {
         public ProductProfile(IConfiguration configuration)
         {
-            CreateMap<Product, ProductResponce>()
+            CreateMap<Product, ProductResponse>()
                 .ForMember(D => D.Brand, O => O.MapFrom(S => S.Brand.Name))
                 .ForMember(D => D.Type, O => O.MapFrom(S => S.Type.Name))
                 //.ForMember(D => D.PictureUrl, O => O.MapFrom(S => $"{configuration["BaseUre"]}/{S.PictureUrl}"))

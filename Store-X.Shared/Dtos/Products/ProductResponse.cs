@@ -2,7 +2,7 @@
 
 namespace Store_X.Shared.Dtos.Products
 {
-    public class ProductResponce
+    public class ProductResponse
     {
         public int Id { get; set; }
         public string Name { get; set; }
