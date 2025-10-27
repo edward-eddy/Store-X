@@ -1,4 +1,5 @@
 ﻿using Store_X.Domain.Entities.Products;
+using Store_X.Shared.Dtos.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,23 +15,23 @@ namespace Store_X.Services.Specificatios.Products
         {
             ApplyIncludes();
         }
-        public ProductsWithBrandAndTypeSpecifications(int? brandId, int? typeId, string? sort, string? search, int pageSize, int pageIndex) : base
+        public ProductsWithBrandAndTypeSpecifications(ProductQueryParameters parameters) : base
             (
                 P =>
-                (brandId == null || P.BrandId == brandId)
+                (parameters.BrandId == null || P.BrandId == parameters.BrandId)
                 &&
-                (typeId == null || P.TypeId == typeId)
+                (parameters.TypeId == null || P.TypeId == parameters.TypeId)
                 &&
-                (string.IsNullOrEmpty(search) || P.Name.ToLower().Contains(search.ToLower()))
+                (string.IsNullOrEmpty(parameters.Search) || P.Name.ToLower().Contains(parameters.Search.ToLower()))
             )
         {
             // priceasc
             // pricedesc
             // nameasc
-            if (!string.IsNullOrEmpty(sort))
+            if (!string.IsNullOrEmpty(parameters.Sorting))
             {
                 // Check Value
-                switch (sort.ToLower())
+                switch (parameters.Sorting.ToLower())
                 {
                     case "priceasc":
                         //OrderBy = P => P.Price;
@@ -53,8 +54,8 @@ namespace Store_X.Services.Specificatios.Products
                 ApplyIncludes();
             }
 
-            Skip = pageSize * (pageIndex - 1);
-            Take = pageSize;
+            Skip = parameters.PageSize * (parameters.PageIndex - 1);
+            Take = parameters.PageSize;
 
         }
 
