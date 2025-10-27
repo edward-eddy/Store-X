@@ -14,12 +14,14 @@ namespace Store_X.Services.Specificatios.Products
         {
             ApplyIncludes();
         }
-        public ProductsWithBrandAndTypeSpecifications(int? brandId, int? typeId, string? sort) : base
+        public ProductsWithBrandAndTypeSpecifications(int? brandId, int? typeId, string? sort, string? search) : base
             (
                 P =>
                 (brandId == null || P.BrandId == brandId)
                 &&
                 (typeId == null || P.TypeId == typeId)
+                &&
+                (string.IsNullOrEmpty(search) || P.Name.ToLower().Contains(search.ToLower()))
             )
         {
             // priceasc
@@ -50,6 +52,7 @@ namespace Store_X.Services.Specificatios.Products
                 AddOrderBy(P => P.Name);
                 ApplyIncludes();
             }
+
         }
 
         private void ApplyIncludes()
