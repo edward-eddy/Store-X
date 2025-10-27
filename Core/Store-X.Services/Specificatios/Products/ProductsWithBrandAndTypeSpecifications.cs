@@ -14,7 +14,7 @@ namespace Store_X.Services.Specificatios.Products
         {
             ApplyIncludes();
         }
-        public ProductsWithBrandAndTypeSpecifications(int? brandId, int? typeId, string? sort, string? search) : base
+        public ProductsWithBrandAndTypeSpecifications(int? brandId, int? typeId, string? sort, string? search, int pageSize, int pageIndex) : base
             (
                 P =>
                 (brandId == null || P.BrandId == brandId)
@@ -52,6 +52,9 @@ namespace Store_X.Services.Specificatios.Products
                 AddOrderBy(P => P.Name);
                 ApplyIncludes();
             }
+
+            Skip = pageSize * (pageIndex - 1);
+            Take = pageSize;
 
         }
 

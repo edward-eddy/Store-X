@@ -39,6 +39,10 @@ namespace Store_X.Persistence
             spec.Includes.Aggregate(query, (query, IncludeExpression) => query.Include(IncludeExpression));
 
 
+            // Apply Pagination
+            query = query.Skip(spec.Skip).Take(spec.Take);
+
+
             return query;
         }
     }
