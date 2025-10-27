@@ -1,11 +1,5 @@
 ﻿using Store_X.Domain.Entities.Products;
 using Store_X.Shared.Dtos.Products;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Store_X.Services.Specificatios.Products
 {
@@ -25,13 +19,22 @@ namespace Store_X.Services.Specificatios.Products
                 (string.IsNullOrEmpty(parameters.Search) || P.Name.ToLower().Contains(parameters.Search.ToLower()))
             )
         {
+
+
+            ApplyPagination(parameters.PageSize, parameters.PageIndex);
+            ApplySorting(parameters.Sorting);
+            ApplyIncludes();
+        }
+
+        private void ApplySorting(string? sort)
+        {
             // priceasc
             // pricedesc
             // nameasc
-            if (!string.IsNullOrEmpty(parameters.Sorting))
+            if (!string.IsNullOrEmpty(sort))
             {
                 // Check Value
-                switch (parameters.Sorting.ToLower())
+                switch (sort.ToLower())
                 {
                     case "priceasc":
                         //OrderBy = P => P.Price;
@@ -51,12 +54,7 @@ namespace Store_X.Services.Specificatios.Products
             {
                 //OrderBy = P => P.Name;
                 AddOrderBy(P => P.Name);
-                ApplyIncludes();
             }
-
-            Skip = parameters.PageSize * (parameters.PageIndex - 1);
-            Take = parameters.PageSize;
-
         }
 
         private void ApplyIncludes()

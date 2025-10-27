@@ -1,11 +1,12 @@
-﻿using Store_X.Shared.Dtos.Products;
+﻿using Store_X.Shared;
+using Store_X.Shared.Dtos.Products;
 
 namespace Store_X.Services_Abstractions.Products
 {
     public interface IProductService
     {
-        Task<IEnumerable<ProductResponce>> GetAllProductsAsync(ProductQueryParameters parameters);
-        Task<ProductResponce> GetProductByIdAsync(int id);
+        Task<PaginationResponse<ProductResponse>> GetAllProductsAsync(ProductQueryParameters parameters);
+        Task<ProductResponse> GetProductByIdAsync(int id);
         Task<IEnumerable<BrandTypeResponse>> GetAllBrandsAsync();
         Task<IEnumerable<BrandTypeResponse>> GetAllTypesAsync();
     }

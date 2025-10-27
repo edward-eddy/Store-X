@@ -24,6 +24,13 @@ namespace Store_X.Services.Specificatios
             Criteria = expression;
         }
 
+        public void ApplyPagination(int pageSize, int pageIndex)
+        {
+            IsPagination = true;
+            Skip = pageSize * (pageIndex - 1);
+            Take = pageSize;
+        }
+
         public void AddOrderBy(Expression<Func<TEntity, object>> expression)
         {
             OrderBy = expression;
