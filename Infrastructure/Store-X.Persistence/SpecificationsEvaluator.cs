@@ -17,16 +17,27 @@ namespace Store_X.Persistence
         {
             var query = inputQuery;
 
-
+            // Check Criteria To Filter
             if (spec.Criteria is not null)
             {
                 query = query.Where(spec.Criteria); // _context.Products.Where(P => P.Id == key as int?)
             }
 
+            // Check Expression which to OrderBy With
+            if (spec.OrderBy is not null)
+            {
+                query = query.OrderBy(spec.OrderBy);
+            }
+            else if (spec.OrderByDescending is not null)
+            {
+                query = query.OrderByDescending(spec.OrderByDescending);
+            }
 
+            // Apply The Includes List
             // _context.Products.Where(P => P.Id == key as int?).Include(P => P.Brand)
             // _context.Products.Where(P => P.Id == key as int?).Include(P => P.Brand).Include(P => P.Type)
             spec.Includes.Aggregate(query, (query, IncludeExpression) => query.Include(IncludeExpression));
+
 
             return query;
         }
