@@ -12,9 +12,9 @@ namespace Store_X.Services.Specificatios.Products
         public ProductsWithBrandAndTypeSpecifications(ProductQueryParameters parameters) : base
             (
                 P =>
-                (parameters.BrandId == null || P.BrandId == parameters.BrandId)
+                (!parameters.BrandId.HasValue || P.BrandId == parameters.BrandId)
                 &&
-                (parameters.TypeId == null || P.TypeId == parameters.TypeId)
+                (!parameters.TypeId.HasValue || P.TypeId == parameters.TypeId)
                 &&
                 (string.IsNullOrEmpty(parameters.Search) || P.Name.ToLower().Contains(parameters.Search.ToLower()))
             )

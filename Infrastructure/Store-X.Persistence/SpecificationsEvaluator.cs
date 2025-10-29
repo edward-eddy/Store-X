@@ -42,7 +42,7 @@ namespace Store_X.Persistence
             // Apply The Includes List
             // _context.Products.Where(P => P.Id == key as int?).Include(P => P.Brand)
             // _context.Products.Where(P => P.Id == key as int?).Include(P => P.Brand).Include(P => P.Type)
-            spec.Includes.Aggregate(query, (query, IncludeExpression) => query.Include(IncludeExpression));
+            query = spec.Includes.Aggregate(query, (query, IncludeExpression) => query.Include(IncludeExpression));
 
 
 
