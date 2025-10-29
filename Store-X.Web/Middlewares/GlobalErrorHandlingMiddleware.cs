@@ -1,4 +1,5 @@
-﻿using Store_X.Shared.ErrorModels;
+﻿using Store_X.Domain.Exceptions;
+using Store_X.Shared.ErrorModels;
 
 namespace Store_X.Web.Middlewares
 {
@@ -20,14 +21,21 @@ namespace Store_X.Web.Middlewares
                 // 3. Response Body
                 // 4. Return Response
 
-                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                //context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 context.Response.ContentType = "application/json";
 
                 var responce = new ErrorDetails()
                 {
-                    StatusCode = StatusCodes.Status500InternalServerError,
+
                     ErrorMessage = ex.Message
                 };
+
+                responce.StatusCode = ex switch
+                {
+                    NotFoundException => StatusCodes.Status404NotFound,
+                    _ => StatusCodes.Status500InternalServerError
+                };
+                context.Response.StatusCode = responce.StatusCode;
 
 
                 await context.Response.WriteAsJsonAsync(responce);

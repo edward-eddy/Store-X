@@ -3,6 +3,7 @@
 using AutoMapper;
 using Store_X.Domain.Contracts;
 using Store_X.Domain.Entities.Products;
+using Store_X.Domain.Exceptions;
 using Store_X.Services.Specificatios;
 using Store_X.Services.Specificatios.Products;
 using Store_X.Services_Abstractions.Products;
@@ -35,6 +36,9 @@ namespace Store_X.Services.Products
             var spec = new ProductsWithBrandAndTypeSpecifications(id);
 
             var product = await _unitOfWork.GetRepository<int, Product>().GetAsync(spec);
+
+            if (product == null) throw new ProductNotFoundException(id);
+
             var result = _mapper.Map<ProductResponse>(product);
             return result;
         }
