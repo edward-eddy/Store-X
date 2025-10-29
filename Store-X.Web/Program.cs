@@ -6,6 +6,7 @@ using Store_X.Persistence.Data.Contexts;
 using Store_X.Services;
 using Store_X.Services.Mapping.Products;
 using Store_X.Services_Abstractions;
+using Store_X.Web.Middlewares;
 using System.Threading.Tasks;
 
 namespace Store_X.Web
@@ -40,7 +41,7 @@ namespace Store_X.Web
             var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>(); // Ask CLR To Create Object From IDbInitializer
             await dbInitializer.InitializeAsync();
 
-            app.UseStaticFiles();
+            app.UseMiddleware<GlobalErrorHandlingMiddleware>();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -49,6 +50,7 @@ namespace Store_X.Web
                 app.UseSwaggerUI();
             }
 
+            app.UseStaticFiles();
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
