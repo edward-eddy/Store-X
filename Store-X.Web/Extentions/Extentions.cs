@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 using Store_X.Domain.Contracts;
+using Store_X.Domain.Entities.Identity;
 using Store_X.Persistence;
+using Store_X.Persistence.Identity.Contexts;
 using Store_X.Services;
 using Store_X.Shared.ErrorModels;
 using Store_X.Web.Middlewares;
@@ -18,6 +22,8 @@ namespace Store_X.Web.Extentions
             services.AddApplicationServices(configuration);
 
             services.ConfigureApiBehaviorOptions();
+
+            services.AddIdentityServices();
 
             return services;
         }
@@ -56,6 +62,21 @@ namespace Store_X.Web.Extentions
             return services;
         }
 
+        private static IServiceCollection AddIdentityServices(this IServiceCollection services)
+        {
+            services.AddIdentityCore<AppUser>(options =>
+            {
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+
+                options.User.RequireUniqueEmail = true;
+
+            }).AddRoles<IdentityRole>()
+            .AddEntityFrameworkStores<IdentityStoreDbContext>();
+            return services;
+        }
+
 
 
 
@@ -88,6 +109,7 @@ namespace Store_X.Web.Extentions
             var scope = app.Services.CreateScope();
             var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>(); // Ask CLR To Create Object From IDbInitializer
             await dbInitializer.InitializeAsync();
+            await dbInitializer.InitializeIdentityAsync();
             return app;
         }
 
