@@ -3,8 +3,7 @@
 using AutoMapper;
 using Store_X.Domain.Contracts;
 using Store_X.Domain.Entities.Products;
-using Store_X.Domain.Exceptions;
-using Store_X.Services.Specificatios;
+using Store_X.Domain.Exceptions.NotFound;
 using Store_X.Services.Specificatios.Products;
 using Store_X.Services_Abstractions.Products;
 using Store_X.Shared;

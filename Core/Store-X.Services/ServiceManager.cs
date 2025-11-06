@@ -1,9 +1,13 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Store_X.Domain.Contracts;
+using Store_X.Domain.Entities.Identity;
+using Store_X.Services.Auth;
 using Store_X.Services.Baskets;
 using Store_X.Services.Cache;
 using Store_X.Services.Products;
 using Store_X.Services_Abstractions;
+using Store_X.Services_Abstractions.Auth;
 using Store_X.Services_Abstractions.Baskets;
 using Store_X.Services_Abstractions.Cache;
 using Store_X.Services_Abstractions.Products;
@@ -19,11 +23,13 @@ namespace Store_X.Services
         IUnitOfWork _unitOfWork,
         IMapper _mapper,
         IBasketRepository _basketRepository,
-        ICacheRepository _cacheRepository
+        ICacheRepository _cacheRepository,
+        UserManager<AppUser> _userManager
         ) : IServiceManager
     {
         public IProductService ProductService { get; } = new ProductService(_unitOfWork, _mapper);
         public IBasketService BasketService { get; } = new BasketService(_basketRepository, _mapper);
         public ICacheService CacheService { get; } = new CacheService(_cacheRepository);
+        public IAuthServices AuthServices { get; } = new AuthService(_userManager);
     }
 }
