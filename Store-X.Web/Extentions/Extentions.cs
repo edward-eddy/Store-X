@@ -6,6 +6,7 @@ using Store_X.Domain.Entities.Identity;
 using Store_X.Persistence;
 using Store_X.Persistence.Identity.Contexts;
 using Store_X.Services;
+using Store_X.Shared;
 using Store_X.Shared.ErrorModels;
 using Store_X.Web.Middlewares;
 
@@ -24,6 +25,8 @@ namespace Store_X.Web.Extentions
             services.ConfigureApiBehaviorOptions();
 
             services.AddIdentityServices();
+
+            services.Configure<JwtOptions>(configuration.GetSection("JwrOptions"));
 
             return services;
         }

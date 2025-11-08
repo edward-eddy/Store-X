@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Store_X.Domain.Entities.Identity;
 using Store_X.Domain.Exceptions.BadRequest;
 using Store_X.Domain.Exceptions.NotFound;
 using Store_X.Domain.Exceptions.Unauthorized;
 using Store_X.Services_Abstractions.Auth;
+using Store_X.Shared;
 using Store_X.Shared.Dtos.Auth;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -14,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Store_X.Services.Auth
 {
-    public class AuthService(UserManager<AppUser> _userManager, IConfiguration _configuration) : IAuthServices
+    public class AuthService(UserManager<AppUser> _userManager, /*IConfiguration _configuration*/ IOptions<JwtOptions> options) : IAuthServices
     {
         public async Task<UserResponse?> LoginAsync(LoginRequest request)
         {
@@ -75,14 +77,26 @@ namespace Store_X.Services.Auth
             }
             ;
 
-            //var jwtOptions = _configuration.GetSection("JwtOptions");
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtOptions:SecurityKey"]));
+            var jwtOptions = options.Value;
+
+
+            //var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtOptions:SecurityKey"]));
+
+            //var token = new JwtSecurityToken(
+            //        issuer: _configuration["JwtOptions:Issuer"],
+            //        audience: _configuration["JwtOptions:Audience"],
+            //        claims: authClaims,
+            //        expires: DateTime.Now.AddDays(double.Parse(_configuration["JwtOptions:DurationDays"])),
+            //        signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
+            //    );
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.SecurityKey));
 
             var token = new JwtSecurityToken(
-                    issuer: _configuration["JwtOptions:Issuer"],
-                    audience: _configuration["JwtOptions:Audience"],
+                    issuer: jwtOptions.Issuer,
+                    audience: jwtOptions.Audience,
                     claims: authClaims,
-                    expires: DateTime.Now.AddDays(double.Parse(_configuration["JwtOptions:DurationDays"])),
+                    expires: DateTime.Now.AddDays(jwtOptions.DurationDays),
                     signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
                 );
 
