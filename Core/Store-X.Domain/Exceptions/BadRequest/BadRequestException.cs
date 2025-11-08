@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Store_X.Domain.Exceptions
+namespace Store_X.Domain.Exceptions.BadRequest
 {
-    public class BasketDeleteBadRequestException() : BadRequestException("Invalid Operation!")
+    public class BadRequestException(string message) : Exception(message)
     {
+
     }
 }

@@ -1,14 +1,10 @@
 ﻿using AutoMapper;
 using Store_X.Domain.Contracts;
 using Store_X.Domain.Entities.Baskets;
-using Store_X.Domain.Exceptions;
+using Store_X.Domain.Exceptions.BadRequest;
+using Store_X.Domain.Exceptions.NotFound;
 using Store_X.Services_Abstractions.Baskets;
 using Store_X.Shared.Dtos.Baskets;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Store_X.Services.Baskets
 {
