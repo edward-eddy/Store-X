@@ -6,11 +6,12 @@ using System.Collections.Generic;
 
 namespace Store_X.Presentation
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class BuggyController : ControllerBase
+    //[ApiController]
+    //[Route("api/[controller]")]
+    //public class BuggyController : ControllerBase
+    public class BuggyController : _ControllerParent
     {
-        [HttpGet("404")]
+        [HttpGet("notfound")]
         public IActionResult GetNotFoundRequest()
         {
             var id = 2;
@@ -22,16 +23,15 @@ namespace Store_X.Presentation
             return NotFound(responce);
         }
 
-        [HttpGet("500")]
+        [HttpGet("servererror")]
         public IActionResult GetServerErrorRequest()
         {
             throw new Exception("Server Error 500 Message");
         }
 
-        [HttpGet("400")]
+        [HttpGet("badrequest")]
         public IActionResult GetBadRequest()
         {
-            var id = 2;
             var responce = new ErrorDetails()
             {
                 StatusCode = StatusCodes.Status400BadRequest,
@@ -52,7 +52,7 @@ namespace Store_X.Presentation
             return BadRequest(responce);
         }
 
-        [HttpGet("401")]
+        [HttpGet("unauthorized")]
         public IActionResult GetUnauthorizedRequest()
         {
             return Unauthorized();

@@ -8,9 +8,10 @@ using Store_X.Shared.ErrorModels;
 
 namespace Store_X.Presentation
 {
-    [ApiController]
-    [Route("api/[controller]")]
+    //[ApiController]
+    //[Route("api/[controller]")]
     public class ProductsController(IServiceManager _serviceManager) : ControllerBase
+    //public class ProductsController(IServiceManager _serviceManager) : ControllerParent
     {
         [HttpGet] // GET: baseUrl/api/products
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationResponse<ProductResponse>))]

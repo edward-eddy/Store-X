@@ -4,9 +4,10 @@ using Store_X.Shared.Dtos.Baskets;
 
 namespace Store_X.Presentation
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class BasketsController(IServiceManager serviceManager) : ControllerBase
+    //[ApiController]
+    //[Route("api/[controller]")]
+    //public class BasketsController(IServiceManager serviceManager) : ControllerBase
+    public class BasketsController(IServiceManager serviceManager) : _ControllerParent
     {
         [HttpGet]
         public async Task<IActionResult> GetBasketById(string id)
