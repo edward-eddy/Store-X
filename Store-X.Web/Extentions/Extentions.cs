@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Store_X.Domain.Contracts;
 using Store_X.Domain.Entities.Identity;
 using Store_X.Persistence;
@@ -9,6 +12,7 @@ using Store_X.Services;
 using Store_X.Shared;
 using Store_X.Shared.ErrorModels;
 using Store_X.Web.Middlewares;
+using System.Text;
 
 namespace Store_X.Web.Extentions
 {
@@ -27,6 +31,9 @@ namespace Store_X.Web.Extentions
             services.AddIdentityServices();
 
             services.Configure<JwtOptions>(configuration.GetSection("JwrOptions"));
+
+            services.AddAuthenticationService(configuration);
+
 
             return services;
         }
@@ -49,6 +56,32 @@ namespace Store_X.Web.Extentions
                         Errors = errors
                     };
                     return new BadRequestObjectResult(response);
+                };
+            });
+
+            return services;
+        }
+        private static IServiceCollection AddAuthenticationService(this IServiceCollection services, IConfiguration configuration)
+        {
+
+            var jwtOptions = configuration.GetSection("JwtOptions").Get<JwtOptions>();
+
+            services.AddAuthentication(optiom =>
+            {
+                optiom.DefaultAuthenticateScheme = "Bearer";
+                optiom.DefaultChallengeScheme = "Bearer";
+            }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = jwtOptions.Issuer,
+                    ValidateAudience = true,
+                    ValidAudience = jwtOptions.Audience,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.SecurityKey)),
+
                 };
             });
 
@@ -99,6 +132,7 @@ namespace Store_X.Web.Extentions
             app.UseStaticFiles();
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 
