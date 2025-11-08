@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Store_X.Domain.Entities.Identity;
 using Store_X.Domain.Exceptions.BadRequest;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Store_X.Services.Auth
 {
-    public class AuthService(UserManager<AppUser> _userManager) : IAuthServices
+    public class AuthService(UserManager<AppUser> _userManager, IConfiguration _configuration) : IAuthServices
     {
         public async Task<UserResponse?> LoginAsync(LoginRequest request)
         {
@@ -74,14 +75,14 @@ namespace Store_X.Services.Auth
             }
             ;
 
-            // StRoNgSeCuRiTyKeYfOrAuThEnTiCaTiOnStRoNgSeCuRiTyKeYfOrAuThEnTiCaTiOnStRoNgSeCuRiTyKeYfOrAuThEnTiCaTiOnStRoNgSeCuRiTyKeYfOrAuThEnTiCaTiOn
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("StRoNgSeCuRiTyKeYfOrAuThEnTiCaTiOnStRoNgSeCuRiTyKeYfOrAuThEnTiCaTiOnStRoNgSeCuRiTyKeYfOrAuThEnTiCaTiOnStRoNgSeCuRiTyKeYfOrAuThEnTiCaTiOn"));
+            //var jwtOptions = _configuration.GetSection("JwtOptions");
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtOptions:SecurityKey"]));
 
             var token = new JwtSecurityToken(
-                    issuer: "https://localhost:7085",
-                    audience: "MyStore",
+                    issuer: _configuration["JwtOptions:Issuer"],
+                    audience: _configuration["JwtOptions:Audience"],
                     claims: authClaims,
-                    expires: DateTime.Now.AddDays(2),
+                    expires: DateTime.Now.AddDays(double.Parse(_configuration["JwtOptions:DurationDays"])),
                     signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
                 );
 
