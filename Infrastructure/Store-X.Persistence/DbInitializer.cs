@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Store_X.Domain.Contracts;
 using Store_X.Domain.Entities.Identity;
+using Store_X.Domain.Entities.Orders;
 using Store_X.Domain.Entities.Products;
 using Store_X.Persistence.Data.Contexts;
 using Store_X.Persistence.Identity.Contexts;
@@ -23,7 +24,6 @@ namespace Store_X.Persistence
             if (_context.Database.GetPendingMigrationsAsync().GetAwaiter().GetResult().Any())
             {
                 await _context.Database.MigrateAsync();
-
             }
 
             // Data Seeding
@@ -72,6 +72,23 @@ namespace Store_X.Persistence
                 if (products is not null && products.Count > 0)
                 {
                     await _context.Products.AddRangeAsync(products);
+                }
+            }
+
+            // Delivery Methods
+            if (!_context.DeliveryMethods.Any())
+            {
+                // 1. Read All Data From Json File 'delivery.json'
+                // Infrastructure\Store-X.Persistence\Data\DataSeeding\delivery.json
+
+                var deliveryData = await File.ReadAllTextAsync(@"..\Infrastructure\Store-X.Persistence\Data\DataSeeding\delivery.json");
+
+                // 2. Convert The JsonString To List<DeliveryMethods>
+                var methods = JsonSerializer.Deserialize<List<DeliveryMethod>>(deliveryData);
+
+                if (methods is not null && methods.Count > 0)
+                {
+                    await _context.DeliveryMethods.AddRangeAsync(methods);
                 }
             }
 
