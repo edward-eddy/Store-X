@@ -8,11 +8,11 @@ namespace Store_X.Domain.Entities.Orders
         {
 
         }
-        public Order(string userEmail, OrderAddress shippingAddress, int deliveryMethodId, ICollection<OrderItem> items, decimal subTotal)
+        public Order(string userEmail, OrderAddress shippingAddress, DeliveryMethod deliveryMethod, ICollection<OrderItem> items, decimal subTotal)
         {
             UserEmail = userEmail;
             ShippingAddress = shippingAddress;
-            DeliveryMethodId = deliveryMethodId;
+            DeliveryMethod = deliveryMethod;
             Items = items;
             SubTotal = subTotal;
         }
