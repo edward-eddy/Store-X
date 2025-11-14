@@ -30,7 +30,7 @@ namespace Store_X.Web.Extentions
 
             services.AddIdentityServices();
 
-            services.Configure<JwtOptions>(configuration.GetSection("JwrOptions"));
+            services.Configure<JwtOptions>(configuration.GetSection("JwtOptions"));
 
             services.AddAuthenticationService(configuration);
 
