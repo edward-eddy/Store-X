@@ -1,6 +1,7 @@
 ﻿using Store_X.Services_Abstractions.Auth;
 using Store_X.Services_Abstractions.Baskets;
 using Store_X.Services_Abstractions.Cache;
+using Store_X.Services_Abstractions.Orders;
 using Store_X.Services_Abstractions.Products;
 using System;
 using System.Collections.Generic;
@@ -16,5 +17,6 @@ namespace Store_X.Services_Abstractions
         public IBasketService BasketService { get; }
         public ICacheService CacheService { get; }
         public IAuthServices AuthServices { get; }
+        public IOrderService OrderService { get; }
     }
 }

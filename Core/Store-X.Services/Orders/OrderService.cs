@@ -15,13 +15,11 @@ using System.Threading.Tasks;
 
 namespace Store_X.Services.Orders
 {
-    public class OrderServise(IUnitOfWork _unitOfWork, IBasketService _basketService, IMapper _mapper) : IOrderService
+    //public class OrderService(IUnitOfWork _unitOfWork, IBasketService _basketService, IMapper _mapper) : IOrderService
+    public class OrderService(IUnitOfWork _unitOfWork, IBasketRepository _basketRepository, IMapper _mapper) : IOrderService
     {
         public async Task<OrderResponse?> CreateOrderAsync(OrderRequest request, string userEmail)
         {
-
-
-
             // 1. Get Order Address
             var orderAddress = _mapper.Map<OrderAddress>(request.ShipToAddress);
 
@@ -31,7 +29,8 @@ namespace Store_X.Services.Orders
 
             //3. Get Order Item
             // 3.1. Get Basket By Id
-            var basket = await _basketService.GetBasketAsync(request.BasketId);
+            //var basket = await _basketService.GetBasketAsync(request.BasketId);
+            var basket = await _basketRepository.GetBasketAsync(request.BasketId);
             if (basket is null) throw new BasketNotFoundException(request.BasketId);
 
             // 3.2. Convert Every basketItem To OrderItem
