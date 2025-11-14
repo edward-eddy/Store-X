@@ -33,7 +33,7 @@ namespace Store_X.Persistence
                 query = query.OrderByDescending(spec.OrderByDescending);
             }
 
-            // Apply Pagination
+            //Apply Pagination
             if (spec.IsPagination)
             {
                 query = query.Skip(spec.Skip).Take(spec.Take);
@@ -43,10 +43,6 @@ namespace Store_X.Persistence
             // _context.Products.Where(P => P.Id == key as int?).Include(P => P.Brand)
             // _context.Products.Where(P => P.Id == key as int?).Include(P => P.Brand).Include(P => P.Type)
             query = spec.Includes.Aggregate(query, (query, IncludeExpression) => query.Include(IncludeExpression));
-
-
-
-
 
             return query;
         }

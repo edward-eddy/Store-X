@@ -26,6 +26,7 @@ namespace Store_X.Services.Mapping.Orders
                 .ForMember(D => D.Total, O => O.MapFrom(S => S.GetTotal()))
                 ;
 
+            CreateMap<DeliveryMethod, DeliveryMethodResponse>();
         }
     }
 }

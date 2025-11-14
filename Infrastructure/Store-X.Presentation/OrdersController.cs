@@ -22,5 +22,32 @@ namespace Store_X.Presentation
             var result = await _serviceManager.OrderService.CreateOrderAsync(request, userEmailClaim.Value);
             return Ok(result);
         }
+
+        [HttpGet]
+        [Route("DeliveryMethods")]
+        public async Task<IActionResult> GetAllMethods()
+        {
+            var result = await _serviceManager.OrderService.GetAllMethodAsync();
+            return Ok(result);
+        }
+
+        [HttpGet("{id}")]
+        [Authorize]
+        public async Task<IActionResult> GetOrderByIdForSpecificUser(Guid id)
+        {
+            var userEmailClaim = User.FindFirst(ClaimTypes.Email);
+            var result = await _serviceManager.OrderService.GetOrderByIdForSpecificUserAsync(id, userEmailClaim.Value);
+            return Ok(result);
+        }
+
+        [HttpGet("{id}")]
+        [Authorize]
+        public async Task<IActionResult> GetOrdersForSpecificUser()
+        {
+            var userEmailClaim = User.FindFirst(ClaimTypes.Email);
+            var result = await _serviceManager.OrderService.GetOrdersForSpecificUserAsync(userEmailClaim.Value);
+            return Ok(result);
+        }
+
     }
 }
