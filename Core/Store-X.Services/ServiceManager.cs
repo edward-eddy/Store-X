@@ -32,7 +32,7 @@ namespace Store_X.Services
         public IProductService ProductService { get; } = new ProductService(_unitOfWork, _mapper);
         public IBasketService BasketService { get; } = new BasketService(_basketRepository, _mapper);
         public ICacheService CacheService { get; } = new CacheService(_cacheRepository);
-        public IAuthServices AuthServices { get; } = new AuthService(_userManager, options);
+        public IAuthServices AuthServices { get; } = new AuthService(_userManager, options, _mapper);
         public IOrderService OrderService { get; } = new OrderService(_unitOfWork, _basketRepository, _mapper);
     }
 }

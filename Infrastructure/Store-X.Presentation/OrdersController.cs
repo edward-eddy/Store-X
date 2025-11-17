@@ -40,7 +40,7 @@ namespace Store_X.Presentation
             return Ok(result);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
         [Authorize]
         public async Task<IActionResult> GetOrdersForSpecificUser()
         {
