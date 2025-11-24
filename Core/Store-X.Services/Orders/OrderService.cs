@@ -54,7 +54,7 @@ namespace Store_X.Services.Orders
             var subTotal = basket.Items.Sum(OI => OI.Price * OI.Quantity);
 
 
-            var order = new Order(userEmail, orderAddress, deliveryMethod, orderItems, subTotal);
+            var order = new Order(userEmail, orderAddress, deliveryMethod, orderItems, subTotal, basket.PaymentIntentId);
             await _unitOfWork.GetRepository<Guid, Order>().AddAsync(order);
             var count = await _unitOfWork.SaveChangesAsync();
             if (count <= 0) throw new OrderCreateBadRequestException();
