@@ -38,7 +38,8 @@ namespace Store_X.Web.Extentions
             {
                 option.AddPolicy("Policy1", policyBuilder =>
                 {
-                    policyBuilder.WithOrigins("http://localhost:4200");
+                    //policyBuilder.WithOrigins("http://localhost:4200");
+                    policyBuilder.AllowAnyOrigin();
                     policyBuilder.AllowAnyMethod();
                     policyBuilder.AllowAnyHeader();
                 });

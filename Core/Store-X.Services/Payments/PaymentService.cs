@@ -57,7 +57,7 @@ namespace Store_X.Services.Payments
 
             // Send Amount TO Stripe
 
-            StripeConfiguration.ApiKey = configuration[key: "StripeOptions: SecretKey"];
+            StripeConfiguration.ApiKey = configuration["StripeOptions:SecretKey"];
 
             PaymentIntentService paymentIntentService = new PaymentIntentService();
             PaymentIntent paymentIntent;
