@@ -53,8 +53,21 @@ namespace Store_X.Services.Orders
             // 4. SubTotal
             var subTotal = basket.Items.Sum(OI => OI.Price * OI.Quantity);
 
+            // 5. TODO :: Payment Intent Id
 
-            var order = new Order(userEmail, orderAddress, deliveryMethod, orderItems, subTotal);
+            // Check Order Exists
+            var specs = new OrdersWithPaymentIntentSpecifications(basket.PaymentIntentId);
+
+            var existsOrder = await _unitOfWork.GetRepository<Guid, Order>().GetAsync(specs);
+
+            if (existsOrder is not null)
+            {
+                _unitOfWork.GetRepository<Guid, Order>().Delete(existsOrder);
+            }
+
+            // Create Order And Save It In DB
+            var order = new Order(userEmail, orderAddress, deliveryMethod, orderItems, subTotal, basket.PaymentIntentId);
+
             await _unitOfWork.GetRepository<Guid, Order>().AddAsync(order);
             var count = await _unitOfWork.SaveChangesAsync();
             if (count <= 0) throw new OrderCreateBadRequestException();

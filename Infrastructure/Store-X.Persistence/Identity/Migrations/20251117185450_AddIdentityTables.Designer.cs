@@ -12,7 +12,7 @@ using Store_X.Persistence.Identity.Contexts;
 namespace Store_X.Persistence.Identity.Migrations
 {
     [DbContext(typeof(IdentityStoreDbContext))]
-    [Migration("20251105205449_AddIdentityTables")]
+    [Migration("20251117185450_AddIdentityTables")]
     partial class AddIdentityTables
     {
         /// <inheritdoc />
@@ -87,7 +87,11 @@ namespace Store_X.Persistence.Identity.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

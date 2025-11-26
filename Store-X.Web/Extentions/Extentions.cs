@@ -34,6 +34,16 @@ namespace Store_X.Web.Extentions
 
             services.AddAuthenticationService(configuration);
 
+            services.AddCors(option =>
+            {
+                option.AddPolicy("Policy1", policyBuilder =>
+                {
+                    //policyBuilder.WithOrigins("http://localhost:4200");
+                    policyBuilder.AllowAnyOrigin();
+                    policyBuilder.AllowAnyMethod();
+                    policyBuilder.AllowAnyHeader();
+                });
+            });
 
             return services;
         }
@@ -137,6 +147,8 @@ namespace Store_X.Web.Extentions
 
 
             app.MapControllers();
+
+            app.UseCors("Policy1");
 
             return app;
         }
